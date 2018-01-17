@@ -7,6 +7,8 @@
 #include "helper_functions.h"
 #include <memory.h>
 
+#include <Windows.h>
+
 // Window size and drawing memory
 int game_width;
 int game_height;
@@ -193,11 +195,14 @@ void resize_box(screen_buffer* screen_buffer)
 
 }
 
-// TODO: Remove this
-std::string base_path = "C:\\Users\\Aleksandar\\Documents\\Programming\\ArtificialLife\\ArtificialLife\\icons\\";
-
 void load_resources(void)
 {
+    LPSTR temp_path = new char[256];
+    GetCurrentDirectory(256, temp_path);
+
+    std::string base_path = temp_path;
+    base_path += "\\icons\\";
+
     //
     delete impassable_mountain.rgb_memory;
 

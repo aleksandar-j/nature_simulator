@@ -137,7 +137,7 @@ void render(int* running, int* updated,
         double seconds_passed = (double)(clock_2.QuadPart - clock_1.QuadPart) / (double)COUNTER_TICKS_PER_SECOND.QuadPart;
         int64_t miliseconds_passed = (int64_t)(seconds_passed * 1000.0);
 
-        int64_t sleep_this_much = (1000.0 / GAME_SPEED) - miliseconds_passed;
+        int64_t sleep_this_much = (1000 / GAME_SPEED) - miliseconds_passed;
 
         if (sleep_this_much > 0) {
             Sleep(sleep_this_much);
