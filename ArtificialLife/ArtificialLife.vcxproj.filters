@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Drawing">
+      <UniqueIdentifier>{bf3afecb-4bae-441b-bcce-7e463fd1f3bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Drawing">
+      <UniqueIdentifier>{0c5cd4c9-4c14-44b8-bca6-c82e3115d380}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Drawing\STB Lib">
+      <UniqueIdentifier>{3ab87142-0b64-4104-bebb-8b461c9372fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\State Update">
+      <UniqueIdentifier>{3fcf7e97-2398-465c-8acd-b5dfdc065652}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\State Update\Objects">
+      <UniqueIdentifier>{a60853d2-af01-49ab-be2a-60e9e636983e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\State Update">
+      <UniqueIdentifier>{c6981341-ea7b-428d-816e-249d0d940eb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\State Update\Objects">
+      <UniqueIdentifier>{c898259d-32ec-4f87-baf4-39c63ae2f964}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="winmain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="artlife_main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game_box_render.cpp">
+      <Filter>Source Files\Drawing</Filter>
+    </ClCompile>
+    <ClCompile Include="game_box_render_drawing.cpp">
+      <Filter>Source Files\Drawing</Filter>
+    </ClCompile>
+    <ClCompile Include="object_basic_plant.cpp">
+      <Filter>Source Files\State Update\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="image_handling.cpp">
+      <Filter>Source Files\Drawing</Filter>
+    </ClCompile>
+    <ClCompile Include="game_state_update.cpp">
+      <Filter>Source Files\State Update</Filter>
+    </ClCompile>
+    <ClCompile Include="helper_functions.cpp">
+      <Filter>Source Files\State Update</Filter>
+    </ClCompile>
+    <ClCompile Include="object_basic_herbivore.cpp">
+      <Filter>Source Files\State Update\Objects</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="artlife_main.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game_box_render.h">
+      <Filter>Header Files\Drawing</Filter>
+    </ClInclude>
+    <ClInclude Include="game_box_render_drawing.h">
+      <Filter>Header Files\Drawing</Filter>
+    </ClInclude>
+    <ClInclude Include="object_basic_plant.h">
+      <Filter>Header Files\State Update\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="image_handling.h">
+      <Filter>Header Files\Drawing</Filter>
+    </ClInclude>
+    <ClInclude Include="object_impassable_mountain.h">
+      <Filter>Header Files\State Update\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="object_natural_disaster.h">
+      <Filter>Header Files\State Update\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Header Files\Drawing\STB Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image_resize.h">
+      <Filter>Header Files\Drawing\STB Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="game_state_update.h">
+      <Filter>Header Files\State Update</Filter>
+    </ClInclude>
+    <ClInclude Include="helper_functions.h">
+      <Filter>Header Files\State Update</Filter>
+    </ClInclude>
+    <ClInclude Include="rendering_defines.h">
+      <Filter>Header Files\Drawing</Filter>
+    </ClInclude>
+    <ClInclude Include="all_objects.h">
+      <Filter>Header Files\State Update\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="game_state.h">
+      <Filter>Header Files\State Update</Filter>
+    </ClInclude>
+    <ClInclude Include="object_basic_herbivore.h">
+      <Filter>Header Files\State Update\Objects</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icons\impassable_mountain.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\natural_disaster.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
