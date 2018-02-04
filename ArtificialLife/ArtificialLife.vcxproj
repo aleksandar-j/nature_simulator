@@ -23,6 +23,7 @@
     <ProjectGuid>{6A9D5B38-2A97-4412-BABF-AA64B5B0C081}</ProjectGuid>
     <RootNamespace>ArtificialLife</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <ProjectName>Artificial Life</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
