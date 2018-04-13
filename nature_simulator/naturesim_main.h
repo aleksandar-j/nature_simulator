@@ -31,7 +31,7 @@ struct input {
     } Keyboard;
 };
 
-// Main artlife function, we only need image for now but we may
+// Main render function, we only need images for now but we may
 //     implement sound later
 void render(int* running, int* updated, 
     screen_buffer* ScreenBuffer, input* KeyboardMouse);

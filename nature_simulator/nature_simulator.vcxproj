@@ -23,7 +23,7 @@
     <ProjectGuid>{6A9D5B38-2A97-4412-BABF-AA64B5B0C081}</ProjectGuid>
     <RootNamespace>ArtificialLife</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
-    <ProjectName>Artificial Life</ProjectName>
+    <ProjectName>nature_simulator</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -122,7 +122,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="artlife_main.cpp" />
+    <ClCompile Include="naturesim_main.cpp" />
     <ClCompile Include="game_box_render_drawing.cpp" />
     <ClCompile Include="game_box_render.cpp" />
     <ClCompile Include="game_state_update.cpp" />
@@ -133,7 +133,7 @@
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="artlife_main.h" />
+    <ClInclude Include="naturesim_main.h" />
     <ClInclude Include="game_box_render_drawing.h" />
     <ClInclude Include="game_box_render.h" />
     <ClInclude Include="all_objects.h" />

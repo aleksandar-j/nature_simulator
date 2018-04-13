@@ -1,5 +1,5 @@
 
-#include "artlife_main.h"
+#include "naturesim_main.h"
 
 #include "game_state_update.h"
 #include "game_box_render.h"

@@ -39,9 +39,6 @@
     <ClCompile Include="winmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="artlife_main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="game_box_render.cpp">
       <Filter>Source Files\Drawing</Filter>
     </ClCompile>
@@ -63,11 +60,11 @@
     <ClCompile Include="object_basic_herbivore.cpp">
       <Filter>Source Files\State Update\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="naturesim_main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="artlife_main.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="game_box_render.h">
       <Filter>Header Files\Drawing</Filter>
     </ClInclude>
@@ -109,6 +106,9 @@
     </ClInclude>
     <ClInclude Include="object_basic_herbivore.h">
       <Filter>Header Files\State Update\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="naturesim_main.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

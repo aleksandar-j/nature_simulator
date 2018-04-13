@@ -3,9 +3,9 @@
 #include <time.h>
 #include <thread>
 
-#include "artlife_main.h"
+#include "naturesim_main.h"
 
-#define WIN_TITLE "Artificial Life"
+#define WIN_TITLE "Nature Simulator"
 
 struct win32_offscreen_buffer {
     BITMAPINFO Info;
