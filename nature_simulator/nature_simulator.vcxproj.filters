@@ -118,5 +118,11 @@
     <Image Include="icons\natural_disaster.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="icons\basic_herbivore.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\basic_plant.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

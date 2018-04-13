@@ -110,9 +110,11 @@ void get_random_surrounding_xy(game_state* game, int org_x, int org_y, int* rand
 }
 
 bool get_random_surrounding_object_with_id_xy(game_state* game,
-    int org_x, int org_y, int* dest_x, int* dest_y,
-    object ID)
+                            int org_x, int org_y, int* dest_x, int* dest_y,
+                                                object ID)
 {
+    bool exists = false;
+
     board_piece* objects = new board_piece[8];
     size_t objects_count;
     get_surrounding_objects_xy(game, org_x, org_y, objects, &objects_count);
@@ -130,10 +132,13 @@ bool get_random_surrounding_object_with_id_xy(game_state* game,
         *dest_x = objects_with_correct_id[rand_choice]->x;
         *dest_y = objects_with_correct_id[rand_choice]->y;
 
-        return true;
-    } else {
-        return false;
+        exists = true;
     }
+
+    delete objects;
+    delete objects_with_correct_id;
+
+    return exists;
 }
 
 bool bits_set(object data, object bits)
