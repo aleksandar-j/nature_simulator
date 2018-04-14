@@ -15,7 +15,11 @@ game_state game;
 // Globals
 unsigned int BOXES_COUNT_WIDTH = 120;
 unsigned int BOXES_COUNT_HEIGHT = 100;
-int GAME_SPEED = 1;
+unsigned int GAME_SPEED = 1;
+
+bool boxes_size_changed_recently = 0;
+unsigned int NEW_BOXES_COUNT_WIDTH = BOXES_COUNT_WIDTH;
+unsigned int NEW_BOXES_COUNT_HEIGHT = BOXES_COUNT_HEIGHT;
 
 // Locals but needed here
 int old_win_size_stamp = 0;
@@ -46,7 +50,7 @@ void render(int* running, int* updated,
 
             if (game_keyboard_mouse->Keyboard.P) {
                 // TODO: Remove this
-                game.board[BOXES_COUNT_WIDTH + 1 + 1] = BASIC_PLANT_ID | MOVED;
+                game.board[BOXES_COUNT_WIDTH + 1] = BASIC_PLANT_ID | MOVED;
                 game_keyboard_mouse->Keyboard.P = 0;
             }
 
@@ -67,7 +71,7 @@ void render(int* running, int* updated,
 
             if (game_keyboard_mouse->Keyboard.C) {
                 // TODO: Remove this
-                game.board[BOXES_COUNT_WIDTH + 1 + 1] = BASIC_HERBIVORE_ID | MOVED;
+                game.board[BOXES_COUNT_WIDTH + 1] = BASIC_HERBIVORE_ID | MOVED;
                 game_keyboard_mouse->Keyboard.C = 0;
             }
 
@@ -78,6 +82,7 @@ void render(int* running, int* updated,
                     {
                         GAME_SPEED += game_keyboard_mouse->Keyboard.PlusSign;
                         GAME_SPEED -= game_keyboard_mouse->Keyboard.MinusSign;
+
                         if (GAME_SPEED <= 1) {
                             GAME_SPEED = 1;
                         }
@@ -85,20 +90,30 @@ void render(int* running, int* updated,
                     // Set BOXES_COUNT_WIDTH by using + and -
                     case (1):
                     {
-                        BOXES_COUNT_WIDTH += game_keyboard_mouse->Keyboard.PlusSign;
-                        BOXES_COUNT_WIDTH -= game_keyboard_mouse->Keyboard.MinusSign;
-                        if (BOXES_COUNT_WIDTH <= 3) {
-                            BOXES_COUNT_WIDTH = 3;
+                        NEW_BOXES_COUNT_WIDTH += game_keyboard_mouse->Keyboard.PlusSign;
+                        NEW_BOXES_COUNT_WIDTH -= game_keyboard_mouse->Keyboard.MinusSign;
+
+                        if (NEW_BOXES_COUNT_WIDTH <= 3) {
+                            NEW_BOXES_COUNT_WIDTH = 3;
+                        } else if (NEW_BOXES_COUNT_WIDTH > 200) {
+                            NEW_BOXES_COUNT_WIDTH = 200;
                         }
+
+                        boxes_size_changed_recently = 1;
                     } break;
                     // Set BOXES_COUNT_HEIGHT by using + and -
                     case (2):
                     {
-                        BOXES_COUNT_HEIGHT += game_keyboard_mouse->Keyboard.PlusSign;
-                        BOXES_COUNT_HEIGHT -= game_keyboard_mouse->Keyboard.MinusSign;
-                        if (BOXES_COUNT_HEIGHT <= 3) {
-                            BOXES_COUNT_HEIGHT = 3;
+                        NEW_BOXES_COUNT_HEIGHT += game_keyboard_mouse->Keyboard.PlusSign;
+                        NEW_BOXES_COUNT_HEIGHT -= game_keyboard_mouse->Keyboard.MinusSign;
+
+                        if (NEW_BOXES_COUNT_HEIGHT <= 3) {
+                            NEW_BOXES_COUNT_HEIGHT = 3;
+                        } else if (NEW_BOXES_COUNT_HEIGHT > 200) {
+                            NEW_BOXES_COUNT_HEIGHT = 200;
                         }
+
+                        boxes_size_changed_recently = 1;
                     } break;
                 }
 
@@ -107,13 +122,28 @@ void render(int* running, int* updated,
             }
         }
 
-        bool resized = check_and_handle_resize(screen_buffer);
+        // Temp code that makes sure we don't resize as often
+        static unsigned int counter_resize_freq = 0;
+        bool resized = false;
+
+        // If we changed the width or height of the window, we have to wait 1 sec
+        //      (counter_resize_freq % GAME_SPEED), until we can resize to minimize delays
+        if (boxes_size_changed_recently) {
+            counter_resize_freq = 1;
+            boxes_size_changed_recently = 0;
+        }
+        else if (counter_resize_freq % GAME_SPEED == 0) {
+            resized = check_and_handle_resize(screen_buffer);
+            counter_resize_freq = 1;
+        } else {
+            counter_resize_freq++;
+        }
 
         // Main part of the loop
         {
             // Disasters are killing...
             if (disasters_on) {
-                int disasters_count = (int)sqrt(BOXES_COUNT_WIDTH*BOXES_COUNT_HEIGHT) / 2;
+                int disasters_count = (int)sqrt((BOXES_COUNT_WIDTH - 1)*(BOXES_COUNT_HEIGHT - 1)) / 2;
                 while (disasters_count--) {
                     int rand_x = rand() % (BOXES_COUNT_WIDTH - 2) + 1;
                     int rand_y = rand() % (BOXES_COUNT_HEIGHT - 2) + 1;
@@ -149,8 +179,11 @@ bool check_and_handle_resize(screen_buffer* screen_buffer)
 {
     bool resized = false;
 
-    int OLD_BOXES_COUNT_WIDTH = 0;
-    int OLD_BOXES_COUNT_HEIGHT = 0;
+    int OLD_BOXES_COUNT_WIDTH = BOXES_COUNT_WIDTH;
+    int OLD_BOXES_COUNT_HEIGHT = BOXES_COUNT_HEIGHT;
+
+    BOXES_COUNT_WIDTH = NEW_BOXES_COUNT_WIDTH;
+    BOXES_COUNT_HEIGHT = NEW_BOXES_COUNT_HEIGHT;
 
     // Check if the user resized
     int new_win_size_stamp = (screen_buffer->width << 16) | (screen_buffer->height);

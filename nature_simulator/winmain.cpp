@@ -7,7 +7,7 @@
 
 #define WIN_TITLE "Nature Simulator"
 
-struct win32_offscreen_buffer {
+struct win32_screen_buffer {
     BITMAPINFO Info;
     void *Memory;
     int BytesPerPixel;
@@ -29,10 +29,10 @@ win32_window_dimension
 Win32GetWindowDimension(HWND hWnd);
 
 void
-Win32ResizeDIBSection(win32_offscreen_buffer *Buffer, int Width, int Height);
+Win32ResizeDIBSection(win32_screen_buffer *Buffer, int Width, int Height);
 
 void
-Win32DisplayBufferInWindow(win32_offscreen_buffer *Buffer,
+Win32DisplayBufferInWindow(win32_screen_buffer *Buffer,
     HDC DeviceContext, win32_window_dimension *WindowSize);
 
 // --------------------------------------------------------------------------------------
@@ -41,7 +41,7 @@ input GameKeyboardMouse;
 screen_buffer GameScreenBuffer;
 
 int running;
-win32_offscreen_buffer ScreenBuffer;
+win32_screen_buffer ScreenBuffer;
 
 // --------------------------------------------------------------------------------------
 
@@ -110,7 +110,7 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR CmdLine, int nCmdSho
             DispatchMessage(&Msg);
         }
 
-        // We will be doing 60 fps, we need to keep the window working too...
+        // We will be doing 60 fps, we need to keep the window working nicely...
 #define FPS 60
         Sleep(1000 / FPS);
     }
@@ -136,12 +136,9 @@ Win32GetWindowDimension(HWND hWnd)
 }
 
 void
-Win32ResizeDIBSection(win32_offscreen_buffer *Buffer, int Width, int Height)
+Win32ResizeDIBSection(win32_screen_buffer *Buffer, int Width, int Height)
 {
     delete Buffer->Memory;
-    /*if (Buffer->Memory) {
-        VirtualFree(Buffer->Memory, 0, MEM_RELEASE);
-    }*/
 
     Buffer->Width = Width;
     Buffer->Height = Height;
@@ -158,12 +155,11 @@ Win32ResizeDIBSection(win32_offscreen_buffer *Buffer, int Width, int Height)
     Buffer->Info.bmiHeader.biCompression = BI_RGB;
 
     int BitmapMemorySize = (Buffer->Width * Buffer->Height) * BytesPerPixel;
-    /*Buffer->Memory = VirtualAlloc(0, BitmapMemorySize, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);*/
     Buffer->Memory = new char[BitmapMemorySize]();
 }
 
 void
-Win32DisplayBufferInWindow(win32_offscreen_buffer *Buffer, HDC DeviceContext,
+Win32DisplayBufferInWindow(win32_screen_buffer *Buffer, HDC DeviceContext,
     win32_window_dimension *WindowSize)
 {
     StretchDIBits(DeviceContext,
@@ -204,7 +200,7 @@ WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         case WM_MOUSEHOVER: 
         {
-            // TODO: See dragging and shit...
+            // TODO: See dragging and things :)...
 
             // X, Y from the upper-left of the clien area
             GameKeyboardMouse.Mouse.XPos = lParam & ~((WORD)0);

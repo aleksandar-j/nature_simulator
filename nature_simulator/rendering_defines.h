@@ -18,7 +18,7 @@ struct screen_buffer {
     int bpp;
 };
 
-// Pictures we will be using (simplifies shit)
+// Pictures we will be using
 struct rgb_square_picture {
     void* rgb_memory;
     size_t rgb_memory_size;
