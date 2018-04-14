@@ -28,7 +28,7 @@ void game_state_update(game_state* game_state)
 
             switch (game_state->board[i] & 0xFF) {
                 case (IMPASSABLE_MOUNTAIN_ID): {
-                    // You're a mountain, you don't do shit...
+                    // You're a mountain, you don't do things :)...
                 } break;
 
                 case (NATURAL_DISASTER_ID):
