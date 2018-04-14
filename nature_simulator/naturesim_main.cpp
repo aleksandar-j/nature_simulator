@@ -46,7 +46,7 @@ void render(int* running, int* updated,
 
             if (game_keyboard_mouse->Keyboard.P) {
                 // TODO: Remove this
-                game.board[BOXES_COUNT_WIDTH + 1 + 1] = BASIC_PLANT_ID |MOVED;
+                game.board[BOXES_COUNT_WIDTH + 1 + 1] = BASIC_PLANT_ID | MOVED;
                 game_keyboard_mouse->Keyboard.P = 0;
             }
 
