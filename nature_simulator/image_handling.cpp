@@ -11,6 +11,11 @@ void png_load(std::string path, rgb_square_picture* out_pict, size_t desired_dim
     int width, height, bpp;
 
     void* mem = stbi_load(path.c_str(), &width, &height, &bpp, 0);
+    if (mem == NULL) {
+        // Loading failed somehow
+        // TODO: do something about it
+        return;
+    }
 
     unsigned char* new_mem = new unsigned char[desired_dimensions*desired_dimensions*bpp + 1];
     stbir_resize_uint8((stbi_uc*)mem, width, height, 0,
