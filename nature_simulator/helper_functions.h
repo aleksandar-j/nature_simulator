@@ -25,6 +25,9 @@ object get_object_id_at_memindex(game_state* game, size_t memindex);
 // Get object ID of the specified x, y spot
 object get_object_id_at_xy(game_state* game, int x, int y);
 
+// Checks whether the position contains EMPTY_BOARD_SLOT (which is 0)
+bool is_free_xy(game_state* game, int x, int y);
+
 
 // Moves object from X, Y to another X, Y. Does not ask questions.
 void move_xy(game_state* game, int org_x, int org_y, int dest_x, int dest_y);
