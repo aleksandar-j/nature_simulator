@@ -1,6 +1,15 @@
 
 #include "helper_functions.h"
 
+bool is_free_xy(game_state* game, int x, int y) 
+{
+    if (get_object_id_at_xy(game, x, y) == EMPTY_BOARD_SLOT) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 void move_xy(game_state* game, int org_x, int org_y, int dest_x, int dest_y)
 {
     int org_i = xy_to_memindex(org_x, org_y);    

@@ -15,7 +15,7 @@ game_state game;
 // Globals
 unsigned int BOXES_COUNT_WIDTH = 80;
 unsigned int BOXES_COUNT_HEIGHT = 45;
-unsigned int GAME_SPEED = 30;
+unsigned int GAME_SPEED = 50;
 
 bool boxes_size_changed_recently = 0;
 unsigned int NEW_BOXES_COUNT_WIDTH = BOXES_COUNT_WIDTH;
@@ -51,6 +51,9 @@ void render(int* running, int* updated,
             if (game_keyboard_mouse->Keyboard.P) {
                 // TODO: Remove this
                 game.board[BOXES_COUNT_WIDTH + 1] = BASIC_PLANT_ID | MOVED;
+                game.board[BOXES_COUNT_WIDTH + 1] = 
+                    (game.board[BOXES_COUNT_WIDTH + 1] & ~BASIC_PLANT_COLOR_BITS) | 
+                    ((rand() % 0xFFFFFF) << BASIC_PLANT_COLOR_BITS_PADDING);
                 game_keyboard_mouse->Keyboard.P = 0;
             }
 
@@ -144,6 +147,8 @@ void render(int* running, int* updated,
             // Disasters are killing...
             if (disasters_on) {
                 int disasters_count = (int)sqrt((BOXES_COUNT_WIDTH - 1)*(BOXES_COUNT_HEIGHT - 1)) / 2;
+                disasters_count = rand() % disasters_count + 1;
+
                 while (disasters_count--) {
                     int rand_x = rand() % (BOXES_COUNT_WIDTH - 2) + 1;
                     int rand_y = rand() % (BOXES_COUNT_HEIGHT - 2) + 1;
