@@ -13,8 +13,8 @@
 game_state game;
 
 // Globals
-unsigned int BOXES_COUNT_WIDTH = 120;
-unsigned int BOXES_COUNT_HEIGHT = 100;
+unsigned int BOXES_COUNT_WIDTH = 80;
+unsigned int BOXES_COUNT_HEIGHT = 45;
 unsigned int GAME_SPEED = 30;
 
 bool boxes_size_changed_recently = 0;

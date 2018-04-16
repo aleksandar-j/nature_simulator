@@ -30,4 +30,7 @@ void basic_plant_live(game_state* game, size_t game_board_index)
     } else {
         *current_guy += BASIC_PLANT_SIZE_1;
     }
+
+    // TODO: Make this more advanced
+    *current_guy = (*current_guy & ~BASIC_PLANT_COLOR_BITS) | ((rand() % 0xFFFFFF) << BASIC_PLANT_COLOR_BITS_PADDING);
 }

@@ -1,7 +1,7 @@
 #pragma once
 
 // Percent of the screen width used for game of life box
-#define GAME_BOX_SCREEN_PERCENT 70
+#define GAME_BOX_SCREEN_PERCENT 100
 
 // How many small 'boxes' for objects will there be in the game
 //    we don't include the border mountains
