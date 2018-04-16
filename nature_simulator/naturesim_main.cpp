@@ -15,7 +15,7 @@ game_state game;
 // Globals
 unsigned int BOXES_COUNT_WIDTH = 120;
 unsigned int BOXES_COUNT_HEIGHT = 100;
-unsigned int GAME_SPEED = 1;
+unsigned int GAME_SPEED = 30;
 
 bool boxes_size_changed_recently = 0;
 unsigned int NEW_BOXES_COUNT_WIDTH = BOXES_COUNT_WIDTH;
@@ -155,9 +155,6 @@ void render(int* running, int* updated,
             // Update the positions of every object
             game_state_update(&game);
 
-            // Draw final image 
-            draw_box(screen_buffer, &game, resized);
-
             *updated = 1;
         }
         
@@ -171,6 +168,22 @@ void render(int* running, int* updated,
 
         if (sleep_this_much > 0) {
             Sleep(sleep_this_much);
+        }
+
+        if (GAME_SPEED >= 60) {
+            // We will only draw sporadically at high GAME_SPEEDS
+            static int counter_game_drawing = 0;
+
+            // Only when GAME_SPEED reaches 60 will we start to draw less often
+            if (counter_game_drawing % (GAME_SPEED / 30) == 0) {
+                // Draw final image 
+                draw_box(screen_buffer, &game, resized);
+            } else {
+                counter_game_drawing++;
+            }
+        } else {
+            // Draw final image 
+            draw_box(screen_buffer, &game, resized);
         }
     }
 }
