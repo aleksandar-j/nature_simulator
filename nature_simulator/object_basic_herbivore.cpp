@@ -32,7 +32,7 @@ void basic_herbivore_live(game_state* game, size_t memindex)
         x = new_x; y = new_y; memindex = xy_to_memindex(x, y);
         eaten = true;
     
-        if (bits_set(game->board[memindex], BASIC_HERBIVORE_SIZE_1) && (rand() % 3 == 0)) {
+        if (bits_set(game->board[memindex], BASIC_HERBIVORE_SIZE_1) && (rand() % 4 == 0)) {
             get_random_surrounding_xy(game, x, y, &new_x, &new_y);
 
             if (get_object_id_at_xy(game, new_x, new_y) == EMPTY_BOARD_SLOT) {
