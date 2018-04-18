@@ -37,7 +37,7 @@ void basic_plant_live(game_state* game, size_t game_board_index)
                 } else {
                     new_color += increment << 16;
                 }
-            } while (new_color & ~BASIC_PLANT_COLOR_BITS != 0);
+            } while ((new_color & (~BASIC_PLANT_COLOR_BITS)) != 0);
 
             place_id_xy(game, new_x, new_y,
                 BASIC_PLANT_ID | BASIC_PLANT_SIZE_0 | MOVED | new_color);

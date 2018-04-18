@@ -146,8 +146,9 @@ void render(int* running, int* updated,
         {
             // Disasters are killing...
             if (disasters_on) {
-                int disasters_count = (int)sqrt((BOXES_COUNT_WIDTH - 1)*(BOXES_COUNT_HEIGHT - 1)) / 2;
-                disasters_count = rand() % disasters_count + 1;
+                // 
+                int disasters_max = (int)sqrt((BOXES_COUNT_WIDTH - 1)*(BOXES_COUNT_HEIGHT - 1)) / 2;
+                int disasters_count = (rand() % disasters_max) + 1;
 
                 while (disasters_count--) {
                     int rand_x = rand() % (BOXES_COUNT_WIDTH - 2) + 1;
