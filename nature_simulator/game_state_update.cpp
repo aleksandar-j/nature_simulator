@@ -3,6 +3,9 @@
 
 #include "all_objects.h"
 
+#include <vector>
+#include <algorithm>
+
 void game_state_update(game_state* game_state)
 {
     // Clean up old zappers
@@ -13,8 +16,14 @@ void game_state_update(game_state* game_state)
             }
         }
     }
-
+    
+    std::vector<int> board_positions(BOXES_COUNT_WIDTH*BOXES_COUNT_HEIGHT);
     for (size_t i = 0; i < BOXES_COUNT_WIDTH*BOXES_COUNT_HEIGHT; i++) {
+        board_positions.push_back(i);
+    }
+    std::random_shuffle(board_positions.begin(), board_positions.end());
+
+    for (auto i : board_positions) {
         if (game_state->board[i] != EMPTY_BOARD_SLOT) {
             // There is something on this piece
 
