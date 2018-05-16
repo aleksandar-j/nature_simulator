@@ -13,21 +13,17 @@
 game_state game;
 
 // Globals
-unsigned int BOXES_COUNT_WIDTH = 80;
-unsigned int BOXES_COUNT_HEIGHT = 45;
-unsigned int GAME_SPEED = 50;
+unsigned int BOXES_COUNT_WIDTH = 160;
+unsigned int BOXES_COUNT_HEIGHT = 90;
+unsigned int GAME_SPEED = 5;
+
+bool disasters_on = true;
 
 bool boxes_size_changed_recently = 0;
 unsigned int NEW_BOXES_COUNT_WIDTH = BOXES_COUNT_WIDTH;
 unsigned int NEW_BOXES_COUNT_HEIGHT = BOXES_COUNT_HEIGHT;
 
-// Locals but needed here
-int old_win_size_stamp = 0;
-int old_boxes_count_stamp = 0;
-
 LARGE_INTEGER COUNTER_TICKS_PER_SECOND;
-
-bool disasters_on = true;
 
 // Local functions
 bool check_and_handle_resize(screen_buffer* screen_buffer);
@@ -50,9 +46,10 @@ void render(int* running, int* updated,
 
             if (game_keyboard_mouse->Keyboard.P) {
                 // TODO: Remove this
-                game.board[BOXES_COUNT_WIDTH + 1] = BASIC_PLANT_ID | MOVED;
-                game.board[BOXES_COUNT_WIDTH + 1] = 
-                    (game.board[BOXES_COUNT_WIDTH + 1] & ~BASIC_PLANT_COLOR_BITS) | 
+                size_t position = xy_to_memindex(BOXES_COUNT_WIDTH / 2, BOXES_COUNT_HEIGHT / 2);
+                game.board[position] = BASIC_PLANT_ID | MOVED;
+                game.board[position] =
+                    (game.board[position] & ~BASIC_PLANT_COLOR_BITS) |
                     ((rand() % 0xFFFFFF) << BASIC_PLANT_COLOR_BITS_PADDING);
                 game_keyboard_mouse->Keyboard.P = 0;
             }
@@ -74,7 +71,8 @@ void render(int* running, int* updated,
 
             if (game_keyboard_mouse->Keyboard.C) {
                 // TODO: Remove this
-                game.board[BOXES_COUNT_WIDTH + 1] = BASIC_HERBIVORE_ID | MOVED;
+                size_t position = xy_to_memindex(BOXES_COUNT_WIDTH / 2, BOXES_COUNT_HEIGHT / 2);
+                game.board[position] = BASIC_HERBIVORE_ID | MOVED;
                 game_keyboard_mouse->Keyboard.C = 0;
             }
 
@@ -205,6 +203,9 @@ bool check_and_handle_resize(screen_buffer* screen_buffer)
     BOXES_COUNT_HEIGHT = NEW_BOXES_COUNT_HEIGHT;
 
     // Check if the user resized
+    static int old_win_size_stamp = 0;
+    static int old_boxes_count_stamp = 0;
+
     int new_win_size_stamp = (screen_buffer->width << 16) | (screen_buffer->height);
     int new_boxes_count_stamp = (BOXES_COUNT_WIDTH << 16) | (BOXES_COUNT_HEIGHT);
 

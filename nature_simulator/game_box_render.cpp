@@ -122,38 +122,43 @@ void draw_game(game_state* game)
 
                 case (BASIC_PLANT_ID):
                 {
-                    size_t checking_bits = game->board[i] & BASIC_PLANT_SIZE_BITS;
+                    size_t plant_size = game->board[i] & BASIC_PLANT_SIZE_BITS;
 
                     rgb_square_picture picture;
 
-                    if (checking_bits == BASIC_PLANT_SIZE_4) {
+                    if (plant_size == BASIC_PLANT_SIZE_4) {
                         picture.rgb_memory_size = basic_plant_4.rgb_memory_size;
                         
                         picture.rgb_memory = new int32_t[basic_plant_4.rgb_memory_size];
                         memcpy(picture.rgb_memory, basic_plant_4.rgb_memory, basic_plant_4.rgb_memory_size * 4);
-                    } else if (checking_bits == BASIC_PLANT_SIZE_3) {
+
+                    } else if (plant_size == BASIC_PLANT_SIZE_3) {
                         picture.rgb_memory_size = basic_plant_3.rgb_memory_size;
                         
                         picture.rgb_memory = new int32_t[basic_plant_3.rgb_memory_size];
                         memcpy(picture.rgb_memory, basic_plant_3.rgb_memory, basic_plant_3.rgb_memory_size * 4);
-                    } else if (checking_bits == BASIC_PLANT_SIZE_2) {
+
+                    } else if (plant_size == BASIC_PLANT_SIZE_2) {
                         picture.rgb_memory_size = basic_plant_2.rgb_memory_size;
                         
                         picture.rgb_memory = new int32_t[basic_plant_2.rgb_memory_size];
                         memcpy(picture.rgb_memory, basic_plant_2.rgb_memory, basic_plant_2.rgb_memory_size * 4);
-                    } else if (checking_bits == BASIC_PLANT_SIZE_1) {
+
+                    } else if (plant_size == BASIC_PLANT_SIZE_1) {
                         picture.rgb_memory_size = basic_plant_1.rgb_memory_size;
 
                         picture.rgb_memory = new int32_t[basic_plant_1.rgb_memory_size];
                         memcpy(picture.rgb_memory, basic_plant_1.rgb_memory, basic_plant_1.rgb_memory_size * 4);
+
                     } else {
                         picture.rgb_memory_size = basic_plant_0.rgb_memory_size;
                         
                         picture.rgb_memory = new int32_t[basic_plant_0.rgb_memory_size];
                         memcpy(picture.rgb_memory, basic_plant_0.rgb_memory, basic_plant_0.rgb_memory_size * 4);
+
                     }
 
-                    int desired_color = game->board[i] >> BASIC_PLANT_COLOR_BITS_PADDING;
+                    int32_t desired_color = (int32_t)(game->board[i] >> BASIC_PLANT_COLOR_BITS_PADDING);
 
                     for (size_t j = 0; j < picture.rgb_memory_size; j++) {
                         if ((((int32_t*)picture.rgb_memory)[j] & 0xFFFFFF) == 0xFFFFFF) {

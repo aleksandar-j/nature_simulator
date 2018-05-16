@@ -20,9 +20,11 @@ struct game_state {
 };
 
 // Here you will find ID
-#define ID_BITS_COUNT 8
-#define ID_BITS 0xFF
+#define ID_BITS_PADDING (0LL)
+#define ID_BITS_COUNT (8LL)
+#define ID_BITS (0xFFLL)
+
 // Flag which says that the object already had it's turn
 #define MOVED ((object)1 << (sizeof(object)*8 - 1))
 
-#define EMPTY_BOARD_SLOT 0
+#define EMPTY_BOARD_SLOT (0LL)

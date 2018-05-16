@@ -17,9 +17,9 @@ void game_state_update(game_state* game_state)
         }
     }
     
-    std::vector<int> board_positions(BOXES_COUNT_WIDTH*BOXES_COUNT_HEIGHT);
+    std::vector<size_t> board_positions(BOXES_COUNT_WIDTH*BOXES_COUNT_HEIGHT);
     for (size_t i = 0; i < BOXES_COUNT_WIDTH*BOXES_COUNT_HEIGHT; i++) {
-        board_positions.push_back(i);
+        board_positions[i] = i;
     }
     std::random_shuffle(board_positions.begin(), board_positions.end());
 
@@ -43,7 +43,6 @@ void game_state_update(game_state* game_state)
                 case (NATURAL_DISASTER_ID):
                 {
                     // Disasters are created in main loop, they just die here
-                    game_state->board[i] |= MOVED;
                 } break;
 
                 case (BASIC_PLANT_ID):
@@ -61,6 +60,8 @@ void game_state_update(game_state* game_state)
                     // far as we are concerned, this is a rock
                 } break;
             }
+
+            game_state->board[i] |= MOVED;
 
         }
 
