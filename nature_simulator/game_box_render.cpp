@@ -108,8 +108,7 @@ void draw_game(game_state* game)
 
             memindex_to_xy(i, &x, &y);
 
-            unsigned char drawing_part = game->board[i] & ID_BITS;
-            switch (drawing_part) {
+            switch (GET_ID_BITS(game->board[i])) {
                 case (IMPASSABLE_MOUNTAIN_ID):
                 {
                     draw_icon(&impassable_mountain, x, y);

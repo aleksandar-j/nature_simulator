@@ -10,7 +10,7 @@ void game_state_update(game_state* game_state)
 {
     // Clean up old zappers
     for (size_t i = 0; i < BOXES_COUNT_WIDTH*BOXES_COUNT_HEIGHT; i++) {
-        if ((game_state->board[i] & 0xFF) == NATURAL_DISASTER_ID) {
+        if (GET_ID_BITS(game_state->board[i]) == NATURAL_DISASTER_ID) {
             if (game_state->board[i] & MOVED) {
                 game_state->board[i] = EMPTY_BOARD_SLOT;
             }
@@ -35,7 +35,7 @@ void game_state_update(game_state* game_state)
                 continue;
             }
 
-            switch (game_state->board[i] & 0xFF) {
+            switch (GET_ID_BITS(game_state->board[i])) {
                 case (IMPASSABLE_MOUNTAIN_ID): {
                     // You're a mountain, you don't do things :)...
                 } break;

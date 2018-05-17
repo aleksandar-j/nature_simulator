@@ -24,6 +24,8 @@ struct game_state {
 #define ID_BITS_COUNT (8LL)
 #define ID_BITS (0xFFLL)
 
+#define GET_ID_BITS(object) ((object & ID_BITS) >> ID_BITS_PADDING)
+
 // Flag which says that the object already had it's turn
 #define MOVED ((object)1 << (sizeof(object)*8 - 1))
 
