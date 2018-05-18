@@ -16,7 +16,10 @@ void move_xy(game_state* game, int org_x, int org_y, int dest_x, int dest_y)
     int dest_i = xy_to_memindex(dest_x, dest_y);
 
     game->board[dest_i] = game->board[org_i];
-    game->board[org_i] = 0;
+
+    if (org_i != dest_i) {
+        game->board[org_i] = EMPTY_BOARD_SLOT;
+    }
 }
 
 void move_if_free_xy(game_state* game, int org_x, int org_y, int dest_x, int dest_y)
@@ -29,7 +32,10 @@ void move_if_free_xy(game_state* game, int org_x, int org_y, int dest_x, int des
 void move_memindex(game_state* game, size_t org_index, size_t dest_index)
 {
     game->board[dest_index] = game->board[org_index];
-    game->board[org_index] = 0;
+
+    if (org_index != dest_index) {
+        game->board[org_index] = EMPTY_BOARD_SLOT;
+    }
 }
 
 void move_if_free_memindex(game_state* game, size_t org_index, size_t dest_index)
@@ -87,10 +93,8 @@ void get_surrounding_objects_xy(game_state* game, int x, int y,
         // This inner layer changes X every time
         for (int j = 0; j < 3; j++, x++) {
 
-            // If we are out of the board, have an empty slot, or have our own spot...
-            if (!is_valid_memindex(memindex + j) ||
-                        game->board[memindex + j] == EMPTY_BOARD_SLOT ||
-                        (memindex + j) == org_memindex) {
+            // If we are out of the board or have our own spot...
+            if (!is_valid_memindex(memindex + j) || (memindex + j) == org_memindex) {
                 continue;
             }
             
@@ -150,14 +154,6 @@ bool get_random_surrounding_object_with_id_xy(game_state* game,
     return exists;
 }
 
-bool bits_set(object data, object bits)
-{
-    if ((data & bits) == bits) {
-        return true;
-    }
-    return false;
-}
-
 void memindex_to_xy(size_t memindex, int* x, int* y)
 {
     if (!is_valid_memindex(memindex)) {
@@ -195,10 +191,10 @@ bool is_valid_memindex(size_t memindex)
 
 object get_object_id_at_memindex(game_state* game, size_t memindex)
 {
-    return game->board[memindex] & ID_BITS;
+    return GET_ID_BITS(game->board[memindex]);
 }
 
 object get_object_id_at_xy(game_state* game, int x, int y)
 {
-    return game->board[xy_to_memindex(x, y)] & ID_BITS;
+    return GET_ID_BITS(game->board[xy_to_memindex(x, y)]);
 }

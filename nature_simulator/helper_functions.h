@@ -4,7 +4,7 @@
 #include <random>
 
 // Given data, returns whether the bits in 'bits' are also on in data
-bool bits_set(object data, object bits);
+//bool bits_set(object data, object bits);
 
 
 // Resolves memory index to X, Y coordinates

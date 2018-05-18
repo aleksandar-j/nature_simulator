@@ -84,7 +84,7 @@ void render(int* running, int* updated,
                         GAME_SPEED += game_keyboard_mouse->Keyboard.PlusSign;
                         GAME_SPEED -= game_keyboard_mouse->Keyboard.MinusSign;
 
-                        if (GAME_SPEED <= 1) {
+                        if (GAME_SPEED >= (UINT_MAX - 1000) || GAME_SPEED == 0) {
                             GAME_SPEED = 1;
                         }
                     } break;

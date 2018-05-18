@@ -121,29 +121,29 @@ void draw_game(game_state* game)
 
                 case (BASIC_PLANT_ID):
                 {
-                    size_t plant_size = game->board[i] & BASIC_PLANT_SIZE_BITS;
+                    size_t plant_size = GET_BASIC_PLANT_SIZE(game->board[i]);
 
                     rgb_square_picture picture;
 
-                    if (plant_size == BASIC_PLANT_SIZE_4) {
+                    if (plant_size == 4) {
                         picture.rgb_memory_size = basic_plant_4.rgb_memory_size;
                         
                         picture.rgb_memory = new int32_t[basic_plant_4.rgb_memory_size];
                         memcpy(picture.rgb_memory, basic_plant_4.rgb_memory, basic_plant_4.rgb_memory_size * 4);
 
-                    } else if (plant_size == BASIC_PLANT_SIZE_3) {
+                    } else if (plant_size == 3) {
                         picture.rgb_memory_size = basic_plant_3.rgb_memory_size;
                         
                         picture.rgb_memory = new int32_t[basic_plant_3.rgb_memory_size];
                         memcpy(picture.rgb_memory, basic_plant_3.rgb_memory, basic_plant_3.rgb_memory_size * 4);
 
-                    } else if (plant_size == BASIC_PLANT_SIZE_2) {
+                    } else if (plant_size == 2) {
                         picture.rgb_memory_size = basic_plant_2.rgb_memory_size;
                         
                         picture.rgb_memory = new int32_t[basic_plant_2.rgb_memory_size];
                         memcpy(picture.rgb_memory, basic_plant_2.rgb_memory, basic_plant_2.rgb_memory_size * 4);
 
-                    } else if (plant_size == BASIC_PLANT_SIZE_1) {
+                    } else if (plant_size == 1) {
                         picture.rgb_memory_size = basic_plant_1.rgb_memory_size;
 
                         picture.rgb_memory = new int32_t[basic_plant_1.rgb_memory_size];
@@ -172,7 +172,7 @@ void draw_game(game_state* game)
 
                 case (BASIC_HERBIVORE_ID):
                 {
-                    if (game->board[i] & BASIC_HERBIVORE_SIZE_1) {
+                    if (GET_BASIC_HERBIVORE_SIZE(game->board[i]) == 1) {
                         draw_icon(&basic_herbivore_1, x, y);
                     } else {
                         draw_icon(&basic_herbivore_0, x, y);

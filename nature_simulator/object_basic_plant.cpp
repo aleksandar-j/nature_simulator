@@ -3,12 +3,7 @@
 
 #include "helper_functions.h"
 
-// 2 BYTES will be used like this
-// 0000 0000 - 0000 0111     (1 - already used for something)
-
-// First 3 bits - size of the plant
-
-bool basic_plant_procreate(game_state* game, int x, int y, object* current_object) 
+bool basic_plant_reproduce(game_state* game, int x, int y, object* current_object) 
 {
 
     int new_x, new_y;
@@ -16,37 +11,31 @@ bool basic_plant_procreate(game_state* game, int x, int y, object* current_objec
 
     if (is_free_xy(game, new_x, new_y)) {
 
-        int64_t NEW_SIZE = BASIC_PLANT_SIZE_0;
-        int64_t NEW_COLOR = *current_object & BASIC_PLANT_COLOR_BITS;
-        int64_t NEW_AGE = 0;
+        object NEW_SIZE = 0;
+        object NEW_COLOR = GET_BASIC_PLANT_COLOR_BITS(*current_object);
+        object NEW_AGE = 0;
 
         // Mutating our current color to make the new one
-        const int64_t max_mutation = 10;
-        int64_t mutation_intensity = rand() % max_mutation;
+        const object max_mutation = 10;
+        object mutation_intensity = rand() % max_mutation;
 
-        int64_t increment = mutation_intensity << BASIC_PLANT_COLOR_BITS_PADDING;
-        if (rand() % 2) {
+        object increment = mutation_intensity << BASIC_PLANT_COLOR_BITS_PADDING;
+        if (rand() % 2 == 0) {
             increment = -increment;
         }
 
+        /* If we get 0 every shift will be 0 and we will edit red,
+           if we get 1 every shift will be 8 and we will edit green... */
         int red_green_or_blue = rand() % 3;
-        if (red_green_or_blue == 0) {
-            mutation_intensity *= ((NEW_COLOR >> BASIC_PLANT_COLOR_BITS_PADDING) & 0xFF) - 0xFF;
-            NEW_COLOR += increment;
-        } else if (red_green_or_blue == 1) {
-            mutation_intensity *= ((NEW_COLOR >> BASIC_PLANT_COLOR_BITS_PADDING >> 8) & 0xFF) - 0xFF;
-            NEW_COLOR += increment << 8;
-        } else {
-            mutation_intensity *= ((NEW_COLOR >> BASIC_PLANT_COLOR_BITS_PADDING >> 16) & 0xFF) - 0xFF;
-            NEW_COLOR += increment << 16;
-        }
+        mutation_intensity *= ((NEW_COLOR >> BASIC_PLANT_COLOR_BITS_PADDING >> (8 * red_green_or_blue)) & 0xFF) - 0xFF;
+        NEW_COLOR += increment << (8 * red_green_or_blue);
 
         if ((NEW_COLOR & (~BASIC_PLANT_COLOR_BITS)) != 0) {
             NEW_COLOR = *current_object & BASIC_PLANT_COLOR_BITS;
         }
 
         // Determining the lifespan of a plant based on its color
-        NEW_AGE = ((int64_t)((double)mutation_intensity / (double)max_mutation * (double)(BASIC_PLANT_AGE_MAX >> BASIC_PLANT_AGE_BITS_PADDING))) << BASIC_PLANT_AGE_BITS_PADDING;
+        NEW_AGE = ((object)((double)mutation_intensity / (double)max_mutation * (double)(BASIC_PLANT_AGE_MAX >> BASIC_PLANT_AGE_BITS_PADDING))) << BASIC_PLANT_AGE_BITS_PADDING;
 
         if (NEW_AGE >= BASIC_PLANT_AGE_MAX) {
             return false;
@@ -63,28 +52,35 @@ bool basic_plant_procreate(game_state* game, int x, int y, object* current_objec
 
 }
 
-void basic_plant_live(game_state* game, size_t game_board_index)
+void basic_plant_live(game_state* game, size_t memindex)
 {
+    object* current_object = &(game->board[memindex]);
+
     int x, y;
-    memindex_to_xy(game_board_index, &x, &y);
+    memindex_to_xy(memindex, &x, &y);
 
-    object* current_object = &(game->board[game_board_index]);
-
-    if ((*current_object & BASIC_PLANT_AGE_BITS) == BASIC_PLANT_AGE_MAX) {
-        *current_object = EMPTY_BOARD_SLOT;
-        return;
-    } else {
-        *current_object += 1LL << BASIC_PLANT_AGE_BITS_PADDING;
-    }
-
-    size_t plant_size = *current_object & BASIC_PLANT_SIZE_BITS;
-    if (plant_size >= BASIC_PLANT_SIZE_2) {
-        if (basic_plant_procreate(game, x, y, current_object)) {
-            *current_object -= BASIC_PLANT_SIZE_1 * 2;
-        } else if (plant_size < BASIC_PLANT_SIZE_4) {
-            *current_object += BASIC_PLANT_SIZE_1;
+    if (GET_BASIC_PLANT_AGE(*current_object) == BASIC_PLANT_AGE_MAX) {
+        if (rand() % BASIC_PLANT_AGE_CHANCE_TO_DIE_AT_MAX == 0) {
+            *current_object = EMPTY_BOARD_SLOT;
+            return;
         }
     } else {
-        *current_object += BASIC_PLANT_SIZE_1;
+        if (rand() % BASIC_PLANT_AGE_CHANCE_TO_DIE_AT_ANY == 0) {
+            *current_object = EMPTY_BOARD_SLOT;
+            return;
+        }
     }
+
+    // Spread and create new plants
+    size_t plant_size = GET_BASIC_PLANT_SIZE(*current_object);
+    if (plant_size >= 2) {
+        if (basic_plant_reproduce(game, x, y, current_object)) {
+            SET_BASIC_PLANT_SIZE(*current_object, GET_BASIC_PLANT_SIZE(*current_object) - 3);
+        }
+    }
+
+    INC_BASIC_PLANT_SIZE(*current_object);
+    INC_BASIC_PLANT_AGE(*current_object);
+
+    *current_object |= MOVED;
 }

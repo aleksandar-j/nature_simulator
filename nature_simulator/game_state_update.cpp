@@ -7,16 +7,7 @@
 #include <algorithm>
 
 void game_state_update(game_state* game_state)
-{
-    // Clean up old zappers
-    for (size_t i = 0; i < BOXES_COUNT_WIDTH*BOXES_COUNT_HEIGHT; i++) {
-        if (GET_ID_BITS(game_state->board[i]) == NATURAL_DISASTER_ID) {
-            if (game_state->board[i] & MOVED) {
-                game_state->board[i] = EMPTY_BOARD_SLOT;
-            }
-        }
-    }
-    
+{   
     std::vector<size_t> board_positions(BOXES_COUNT_WIDTH*BOXES_COUNT_HEIGHT);
     for (size_t i = 0; i < BOXES_COUNT_WIDTH*BOXES_COUNT_HEIGHT; i++) {
         board_positions[i] = i;
@@ -30,8 +21,13 @@ void game_state_update(game_state* game_state)
             if (game_state->board[i] & MOVED) {
                 // It already had its chance...
 
+                // If it's a disaster that had its chance, kill it
+                if (GET_ID_BITS(game_state->board[i]) == NATURAL_DISASTER_ID) {
+                    game_state->board[i] = EMPTY_BOARD_SLOT;
+                }
+
                 // Remove the moved tag
-                game_state->board[i] ^= MOVED;
+                game_state->board[i] &= ~MOVED;
                 continue;
             }
 
